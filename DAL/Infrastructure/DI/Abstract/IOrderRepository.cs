@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Entities;
 
-namespace DAL.Infrustructure.DI.Abstract
+namespace DAL.Infrastructure.DI.Abstract
 {
     public interface IOrderRepository: IRepositoryBase<Order, int>
     {

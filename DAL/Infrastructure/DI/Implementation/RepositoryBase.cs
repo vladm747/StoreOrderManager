@@ -1,13 +1,14 @@
-﻿using DAL.Infrustructure.DI.Abstract;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Context;
+using DAL.Infrastructure.DI.Abstract;
 
-namespace DAL.Infrustructure.DI.Implementation
+namespace DAL.Infrastructure.DI.Implementation
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : class
     {

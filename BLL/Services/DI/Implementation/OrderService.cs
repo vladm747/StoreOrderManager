@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BLL.DTO;
 using BLL.Services.DI.Abstract;
 using DAL.Entities;
+using DAL.Infrastructure.DI.Abstract;
+using DAL.Infrastructure.DI.Implementation;
 
 namespace BLL.Services.DI.Implementation
 {
     public class OrderService: IOrderService
     {
-        public List<Order> GetAllOrders(int page, int pageSize)
+        private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
+        public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _orderRepository = orderRepository;
+            _mapper = mapper;
+        }
+
+        public IEnumerable<OrderDTO> GetAllOrders(int? page, int? pageSize)
+        {
+            
+            return _mapper.Map<IEnumerable<OrderDTO>>(_orderRepository.GetAll());
         }
 
         public Task<Order> GetOrderById(int id)

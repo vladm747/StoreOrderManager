@@ -10,7 +10,7 @@ namespace BLL.Services.DI.Abstract
 {
     public interface IOrderService
     {
-        List<Order> GetAllOrders(int page, int pageSize);
+        IEnumerable<OrderDTO> GetAllOrders(int? page, int? pageSize);
         Task<Order> GetOrderById(int id);
         Task AddOrder(Order order);
         Task<Order> UpdateOrder(int id, OrderDTO order);
