@@ -1,4 +1,7 @@
-﻿using DAL.Context;
+﻿using BLL.AutoMapperProfiles;
+using DAL.Context;
+using DAL.Infrustructure.DI.Abstract;
+using DAL.Infrustructure.DI.Implementation;
 
 namespace StoreOrderManager.Startup
 {
@@ -18,6 +21,8 @@ namespace StoreOrderManager.Startup
         {
             services.AddDbContext<NorthwindContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Northwind")));
+            services.AddAutoMapper(typeof(OrderProfile));
+            services.AddScoped<IOrderRepository, OrderRepository>();
         }
 
         private static void RegisterSwagger(IServiceCollection services)
