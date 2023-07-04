@@ -22,15 +22,18 @@ namespace BLL.Services.DI.Implementation
             _mapper = mapper;
         }
 
-        public IEnumerable<OrderDTO> GetAllOrders(int? page, int? pageSize)
+        public async Task<IEnumerable<OrderDTO>> GetAllAsync(int? page, int? pageSize)
         {
-            
-            return _mapper.Map<IEnumerable<OrderDTO>>(_orderRepository.GetAll());
+            var orders = await _orderRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
-        public Task<Order> GetOrderById(int id)
+        public async Task<OrderDTO> GetOrderByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var order = await _orderRepository.FindAsync(id);
+            if (order == null)
+                throw new ArgumentException($"There is no order with id {id} in the database");
+            return _mapper.Map<OrderDTO>(order);
         }
 
         public Task AddOrder(Order order)
@@ -38,7 +41,7 @@ namespace BLL.Services.DI.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<Order> UpdateOrder(int id, OrderDTO order)
+        public Task<OrderDTO> UpdateOrder(int id, OrderDTO order)
         {
             throw new NotImplementedException();
         }

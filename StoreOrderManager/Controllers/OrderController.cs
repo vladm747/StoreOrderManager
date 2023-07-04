@@ -14,17 +14,18 @@ namespace StoreOrderManager.Controllers
         }
         // GET: OrderController
         [HttpGet("orders")]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var orders = _orderService.GetAllOrders(null, null);
+            var orders = await _orderService.GetAllAsync(null, null);
             return View(orders);
         }
 
-        //// GET: OrderController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        // GET: OrderController/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            return View(order);
+        }
 
         //// GET: OrderController/Create
         //public ActionResult Create()
@@ -47,7 +48,8 @@ namespace StoreOrderManager.Controllers
         //    }
         //}
 
-        //// GET: OrderController/Edit/5
+        // GET: OrderController/Edit/5
+        //[HttpGet]
         //public ActionResult Edit(int id)
         //{
         //    return View();

@@ -13,20 +13,31 @@ namespace DAL.Infrastructure.DI.Implementation
 {
     public class OrderRepository: RepositoryBase<Order, int>, IOrderRepository
     {
-        private readonly NorthwindContext _northwindContext;
-
         public OrderRepository(NorthwindContext context) : base(context)
         {
-            _northwindContext = context;
+           
         }
-        public override IEnumerable<Order> GetAll()
+        public override async Task<IEnumerable<Order>> GetAllAsync()
         {
-            var orders = _northwindContext.Orders
+            return await Table
                 .Include(order => order.Employee)
                 .Include(order => order.Customer)
                 .Include(order => order.OrderDetails)
-                .Include(order => order.ShipViaNavigation);
-            return orders;
+                .Include(order => order.ShipViaNavigation)
+                .ToListAsync();
+            
+        }
+
+        public override async Task<Order> FindAsync(int id)
+        {
+            return await Table
+                .Where(order => order.OrderId == id)
+                .Include(order => order.Employee)
+                .Include(order => order.Customer)
+                .Include(order => order.OrderDetails)
+                .Include(order => order.ShipViaNavigation)
+                .FirstOrDefaultAsync();
+
         }
     }
 }

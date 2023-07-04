@@ -19,12 +19,12 @@ namespace DAL.Infrastructure.DI.Implementation
             _context = context ?? throw new ArgumentNullException(nameof(context));
             Table = _context.Set<TEntity>();
         }
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return Table;
+            return await Table.ToListAsync();
         }
 
-        public virtual async Task<TEntity?> GetByKeyAsync(TKey key)
+        public virtual async Task<TEntity?> FindAsync(TKey key)
         {
             return await Table.FindAsync(key);
         }
