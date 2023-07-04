@@ -20,12 +20,6 @@ namespace StoreOrderManager.Controllers
             return View(orders);
         }
 
-        // GET: OrderController/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            var order = await _orderService.GetOrderByIdAsync(id);
-            return View(order);
-        }
 
         //// GET: OrderController/Create
         //public ActionResult Create()
