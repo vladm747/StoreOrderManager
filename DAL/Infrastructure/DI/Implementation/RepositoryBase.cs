@@ -1,13 +1,14 @@
-﻿using DAL.Infrustructure.DI.Abstract;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Context;
+using DAL.Infrastructure.DI.Abstract;
 
-namespace DAL.Infrustructure.DI.Implementation
+namespace DAL.Infrastructure.DI.Implementation
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : class
     {
@@ -18,12 +19,12 @@ namespace DAL.Infrustructure.DI.Implementation
             _context = context ?? throw new ArgumentNullException(nameof(context));
             Table = _context.Set<TEntity>();
         }
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return Table;
+            return await Table.ToListAsync();
         }
 
-        public virtual async Task<TEntity?> GetByKeyAsync(TKey key)
+        public virtual async Task<TEntity?> FindAsync(TKey key)
         {
             return await Table.FindAsync(key);
         }
@@ -40,10 +41,10 @@ namespace DAL.Infrustructure.DI.Implementation
             await SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             Table.Remove(entity);
-            return await SaveChangesAsync();
+            await SaveChangesAsync();
         }
         public virtual async Task<int> SaveChangesAsync()
         {

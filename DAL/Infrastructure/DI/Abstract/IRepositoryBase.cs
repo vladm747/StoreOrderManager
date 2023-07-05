@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Infrustructure.DI.Abstract
+namespace DAL.Infrastructure.DI.Abstract
 {
     public interface IRepositoryBase<TEntity, TKey>
     {
-        IEnumerable<TEntity> GetAll();
-        Task<TEntity?> GetByKeyAsync(TKey key);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity?> FindAsync(TKey key);
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
-        Task<int> DeleteAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
