@@ -65,7 +65,7 @@ namespace StoreOrderManager.Controllers
 
         // GET: OrderController/Delete/5
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id) 
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             return View(order);

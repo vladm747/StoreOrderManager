@@ -1,13 +1,12 @@
-﻿using System;
+﻿using DAL.Entities.Base;
+using System;
 using System.Collections.Generic;
 
 namespace DAL.Entities;
 
-public partial class CustomerDemographic
+public class CustomerDemographic : BaseEntity<string>
 {
-    public string CustomerTypeId { get; set; } = null!;
-
     public string? CustomerDesc { get; set; }
 
-    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+    public virtual ICollection<Customer> Customers { get; set; } = null!;
 }

@@ -1,17 +1,14 @@
-﻿using System;
+﻿using DAL.Entities.Base;
+using System;
 using System.Collections.Generic;
 
 namespace DAL.Entities;
 
-public partial class Territory
+public class Territory : BaseEntity<string>
 {
-    public string TerritoryId { get; set; } = null!;
-
-    public string TerritoryDescription { get; set; } = null!;
-
+    public string TerritoryDescription { get; set; } = string.Empty;
     public int RegionId { get; set; }
 
     public virtual Region Region { get; set; } = null!;
-
-    public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
+    public virtual ICollection<Employee> Employees { get; set; } = null!;
 }

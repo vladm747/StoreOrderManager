@@ -24,7 +24,6 @@ namespace DAL.Infrastructure.DI.Implementation
                 .Include(order => order.Employee)
                 .Include(order => order.Customer)
                 .Include(order => order.OrderDetails)
-                .Include(order => order.ShipViaNavigation)
                 .ToListAsync();
             
         }
@@ -32,11 +31,10 @@ namespace DAL.Infrastructure.DI.Implementation
         public override async Task<Order> FindAsync(int id)
         {
             return await Table
-                .Where(order => order.OrderId == id)
+                .Where(order => order.Id == id)
                 .Include(order => order.Employee)
                 .Include(order => order.Customer)
                 .Include(order => order.OrderDetails)
-                .Include(order => order.ShipViaNavigation)
                 .FirstOrDefaultAsync();
 
         }
