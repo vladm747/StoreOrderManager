@@ -41,10 +41,10 @@ namespace DAL.Infrastructure.DI.Implementation
             await SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             Table.Remove(entity);
-            return await SaveChangesAsync();
+            await SaveChangesAsync();
         }
         public virtual async Task<int> SaveChangesAsync()
         {

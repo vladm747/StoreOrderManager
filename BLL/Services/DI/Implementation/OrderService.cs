@@ -36,19 +36,18 @@ namespace BLL.Services.DI.Implementation
             return _mapper.Map<OrderDTO>(order);
         }
 
-        public Task AddOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<OrderDTO> UpdateOrder(int id, OrderDTO order)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteOrder(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var order = await _orderRepository.FindAsync(id);
+            if (order == null)
+                throw new InvalidOperationException(
+                    $"Order with id {id}, that you are trying to delete doesn't exist in the database.");
+            await _orderRepository.DeleteAsync(order);
         }
     }
 }

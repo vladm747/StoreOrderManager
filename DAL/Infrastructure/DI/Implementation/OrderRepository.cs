@@ -20,6 +20,7 @@ namespace DAL.Infrastructure.DI.Implementation
         public override async Task<IEnumerable<Order>> GetAllAsync()
         {
             return await Table
+                .AsNoTracking()
                 .Include(order => order.Employee)
                 .Include(order => order.Customer)
                 .Include(order => order.OrderDetails)

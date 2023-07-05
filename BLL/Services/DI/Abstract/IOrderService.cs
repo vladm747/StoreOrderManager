@@ -12,8 +12,7 @@ namespace BLL.Services.DI.Abstract
     {
         Task<IEnumerable<OrderDTO>> GetAllAsync(int? page, int? pageSize);
         Task<OrderDTO> GetOrderByIdAsync(int id);
-        Task AddOrder(Order order);
         Task<OrderDTO> UpdateOrder(int id, OrderDTO order);
-        Task<bool> DeleteOrder(int id);
+        Task DeleteAsync(int id);
     }
 }

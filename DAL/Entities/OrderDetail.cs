@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DAL.Entities;
 
-public partial class OrderDetail
+public class OrderDetail
 {
     public int OrderId { get; set; }
 

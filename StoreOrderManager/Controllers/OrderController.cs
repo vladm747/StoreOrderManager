@@ -1,5 +1,4 @@
 ﻿using BLL.Services.DI.Abstract;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StoreOrderManager.Controllers
@@ -64,25 +63,21 @@ namespace StoreOrderManager.Controllers
         //    }
         //}
 
-        //// GET: OrderController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        // GET: OrderController/Delete/5
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            return View(order);
+        }
 
-        //// POST: OrderController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // POST: OrderController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOrderConfirmed(int id)
+        {
+            await _orderService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
