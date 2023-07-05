@@ -3,8 +3,8 @@ using StoreOrderManager.Startup;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.RegisterApplicationServices(builder.Configuration);
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 app.ConfigureMiddleware();
@@ -18,8 +18,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();

@@ -26,6 +26,8 @@ namespace StoreOrderManager.Startup
             services.AddAutoMapper(typeof(OrderProfile));
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         private static void RegisterSwagger(IServiceCollection services)

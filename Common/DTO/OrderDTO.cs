@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Entities;
 
-namespace BLL.DTO
+namespace Common.DTO
 {
     public class OrderDTO
     {

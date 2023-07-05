@@ -1,15 +1,15 @@
-﻿@model Common.DTO.OrderDTO
-
+﻿@using Common.DTO
+@model OrderDTO
 @{
-    ViewData["Title"] = "Delete Order";
+    ViewData["Title"] = "Details";
     var orderDetails = Model.OrderDetails.ToList();
+    List<ProductDTO> products = ViewBag.Products ?? new List<ProductDTO>();
 }
 
-<h1>Delete</h1>
+<h1>Details</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Order</h4>
+    <h4>OrderDTO</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -97,9 +97,49 @@
             @Html.DisplayFor(model => model.ShipCountry)
         </dd>
     </dl>
-    
-    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <h4>Products</h4>
+    @{
+        var product = new ProductDTO();
+    }
+    <table class="table table-striped">
+        <thead>
+        <tr class ="row">
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(_ => product.Id)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(_ => product.ProductName)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(_ => product.SupplierId)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(_ => product.CategoryId)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in products)
+            {
+                <tr class="row">
+                    <td class = "col-sm-10">
+                        @Html.DisplayFor(_ => item.Id)
+                    </td>
+                    <td class="col-sm-10">
+                        @Html.DisplayFor(_ => item.ProductName)
+                    </td>
+                    <td class="col-sm-10">
+                        @Html.DisplayFor(_ => item.SupplierId)
+                    </td>
+                    <td class="col-sm-10">
+                        @Html.DisplayFor(_ => item.CategoryId)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+   @* @Html.ActionLink("Edit", "Edit", new {  id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>*@
 </div>
