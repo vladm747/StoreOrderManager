@@ -18,6 +18,7 @@ namespace StoreOrderManager.Controllers
             _productService = productService;
         }
 
+        
         public async Task<IActionResult> Index() => Redirect("orders/page/1");
         // GET: OrderController
         [HttpGet("orders/page/{page}")]
@@ -59,7 +60,7 @@ namespace StoreOrderManager.Controllers
             return RedirectToAction(nameof(Details), new { id = order.Id });
         }
 
-        [HttpGet]
+        [HttpGet("order/{id}")]
         public async Task<IActionResult> Details(int id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
@@ -72,6 +73,7 @@ namespace StoreOrderManager.Controllers
             return View(order);
         }
         // GET: OrderController/Delete/5
+        [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int id) 
         {
             var order = await _orderService.GetOrderByIdAsync(id);
