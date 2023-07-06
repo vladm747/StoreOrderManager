@@ -17,16 +17,25 @@ namespace BLL.Services.DI.Implementation
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
+        public int TotalOrders { get; }
         public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
+            TotalOrders = _orderRepository.Table.Count();
         }
 
         public async Task<IEnumerable<OrderDTO>> GetAllAsync(int? page, int? pageSize)
         {
             var orders = await _orderRepository.GetAllAsync();
 
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderDTO>> GetOrderPageAsync(int page, int pageSize)
+        {
+            if(page < 1) page = 1;
+            var orders = await _orderRepository.GetPageAsync((page-1)*pageSize, pageSize);
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 

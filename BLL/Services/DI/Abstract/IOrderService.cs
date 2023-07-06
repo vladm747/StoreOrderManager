@@ -10,7 +10,9 @@ namespace BLL.Services.DI.Abstract
 {
     public interface IOrderService
     {
+        int TotalOrders { get; }
         Task<IEnumerable<OrderDTO>> GetAllAsync(int? page, int? pageSize);
+        Task<IEnumerable<OrderDTO>> GetOrderPageAsync(int page, int pageSize);
         Task<OrderDTO> GetOrderByIdAsync(int id);
         Task UpdateAsync(int id, OrderDTO order);
         Task DeleteAsync(int id);

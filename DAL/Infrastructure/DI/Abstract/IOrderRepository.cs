@@ -9,5 +9,6 @@ namespace DAL.Infrastructure.DI.Abstract
 {
     public interface IOrderRepository: IRepositoryBase<Order, int>
     {
+        Task<IEnumerable<Order>> GetPageAsync(int countSkip, int pageSize);
     }
 }

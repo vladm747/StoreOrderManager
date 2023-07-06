@@ -1,6 +1,8 @@
 ﻿using BLL.Services.DI.Abstract;
 using Common.DTO;
+using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
+using StoreOrderManager.Models;
 
 namespace StoreOrderManager.Controllers
 {
@@ -9,16 +11,27 @@ namespace StoreOrderManager.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
+        private const int pageSize = 10;
         public OrderController(IOrderService orderService, IProductService productService)
         {
             _orderService = orderService;
             _productService = productService;
         }
+
+        public async Task<IActionResult> Index() => Redirect("orders/page/1");
         // GET: OrderController
-        [HttpGet("orders/")]
-        public async Task<IActionResult> OrdersList()
+        [HttpGet("orders/page/{page}")]
+        public async Task<IActionResult> OrdersList(int page = 1)
         {
-            var orders = await _orderService.GetAllAsync(null, null);
+            int totalOrders;
+            List<OrderDTO> orders;
+
+            totalOrders = _orderService.TotalOrders;
+            orders = (await _orderService.GetOrderPageAsync(page, pageSize)).ToList();
+
+            var pager = new Pager(totalOrders, page, pageSize);
+            ViewBag.Pager = pager;
+
             return View(orders);
         }
 

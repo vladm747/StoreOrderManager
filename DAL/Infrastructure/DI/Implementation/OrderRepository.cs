@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using DAL.Context;
 using DAL.Entities;
 using DAL.Infrastructure.DI.Abstract;
@@ -13,10 +14,8 @@ namespace DAL.Infrastructure.DI.Implementation
 {
     public class OrderRepository: RepositoryBase<Order, int>, IOrderRepository
     {
-        public OrderRepository(NorthwindContext context) : base(context)
-        {
-           
-        }
+        public OrderRepository(NorthwindContext context) : base(context) { }
+        internal OrderRepository(DbContextOptions<NorthwindContext> options) : base(options) { }
         public override async Task<IEnumerable<Order>> GetAllAsync()
         {
             return await Table
@@ -26,6 +25,11 @@ namespace DAL.Infrastructure.DI.Implementation
                 .Include(order => order.OrderDetails)
                 .ToListAsync();
             
+        }
+        public async Task<IEnumerable<Order>> GetPageAsync(int countSkip, int pageSize)
+        {
+            return await Table.OrderBy(order => order.Id).Skip(countSkip)
+                .Take(pageSize).ToListAsync();
         }
 
         public override async Task<Order> FindAsync(int id)
