@@ -2,11 +2,20 @@
 
 @{
     ViewData["Title"] = "Orders";
-    int page = 0;
     Pager pager = ViewBag.Pager ?? new Pager();
-    page = pager.PageIndex;
-}
 
+    string? query = ViewBag.SearchQuery;
+}
+<div class="col-4 justify-content-end">
+    <form asp-controller="Order" asp-action="OrdersList" asp-route-page="1">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="searchQuery"
+                   placeholder="Search Key">
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit"
+                   value="Search">
+        </span>
+    </form>
+</div>
 <h1>Orders</h1>
 <div class="container">
     <div class="m-0">
@@ -134,25 +143,25 @@
                 @if (pager.PageIndex > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="1">First</a>
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="1" asp-route-searchQuery="@query">First</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex - 1)">Previous</a>
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex - 1)" asp-route-searchQuery="@query">Previous</a>
                     </li>
                 }
                 @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
                 {
                     <li class="page-item @(pg == pager.PageIndex ? "active" : "")">
-                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@pg">@pg</a>
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@pg" asp-route-searchQuery="@query">@pg</a>
                     </li>
                 }
                 @if (pager.PageIndex < pager.PagesCount)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex + 1)">Next</a>
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex + 1)" asp-route-searchQuery="@query">Next</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PagesCount)">Last</a>
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PagesCount)" asp-route-searchQuery="@query">Last</a>
                     </li>
                 }
             </ul>

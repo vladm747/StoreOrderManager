@@ -38,7 +38,15 @@ namespace BLL.Services.DI.Implementation
             var orders = await _orderRepository.GetPageAsync((page-1)*pageSize, pageSize);
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
+        public async Task<IEnumerable<OrderDTO>> SearchOrdersByQueryAsync(string searchQuery)
+        {
+            var orders = (await _orderRepository.FindByCustomer(searchQuery))
+                .Union(await _orderRepository.FindByEmployee(searchQuery))
+                .Union(await _orderRepository.FindByProperty(searchQuery))
+                .Union(await _orderRepository.FindByShipper(searchQuery));
 
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
+        }
         public async Task<OrderDTO> GetOrderByIdAsync(int id)
         {
             var order = await _orderRepository.FindAsync(id);

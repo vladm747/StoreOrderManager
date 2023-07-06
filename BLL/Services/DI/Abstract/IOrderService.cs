@@ -13,6 +13,7 @@ namespace BLL.Services.DI.Abstract
         int TotalOrders { get; }
         Task<IEnumerable<OrderDTO>> GetAllAsync(int? page, int? pageSize);
         Task<IEnumerable<OrderDTO>> GetOrderPageAsync(int page, int pageSize);
+        Task<IEnumerable<OrderDTO>> SearchOrdersByQueryAsync(string searchQuery);
         Task<OrderDTO> GetOrderByIdAsync(int id);
         Task UpdateAsync(int id, OrderDTO order);
         Task DeleteAsync(int id);

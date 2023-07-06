@@ -12,39 +12,46 @@ namespace StoreOrderManager.Controllers
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
         private const int pageSize = 10;
+
         public OrderController(IOrderService orderService, IProductService productService)
         {
             _orderService = orderService;
             _productService = productService;
         }
 
-        
-        public async Task<IActionResult> Index() => Redirect("orders/page/1");
-        // GET: OrderController
-        [HttpGet("orders/page/{page}")]
-        public async Task<IActionResult> OrdersList(int page = 1)
+        public IActionResult Index() => Redirect("orders/page/1");
+
+        [Route("orders/page/{page}/{searchQuery?}")]
+        public async Task<IActionResult> OrdersList(int page = 1, string? searchQuery = null)
         {
             int totalOrders;
             List<OrderDTO> orders;
-
-            totalOrders = _orderService.TotalOrders;
-            orders = (await _orderService.GetOrderPageAsync(page, pageSize)).ToList();
+            
+            if (string.IsNullOrEmpty(searchQuery))
+            {
+                totalOrders = _orderService.TotalOrders;
+                orders = (await _orderService.GetOrderPageAsync(page, pageSize)).ToList();
+            }
+            else
+            {
+                orders = (await _orderService.SearchOrdersByQueryAsync(searchQuery)).ToList();
+                totalOrders = _orderService.TotalOrders;
+                orders = orders.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
 
             var pager = new Pager(totalOrders, page, pageSize);
             ViewBag.Pager = pager;
-
+            ViewBag.SearchQuery = searchQuery!;
             return View(orders);
         }
-
-        //GET: OrderController/Edit/5
+        
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             return View(order);
         }
-
-        //POST: OrderController/Edit/5
+        
         [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute]int id, OrderDTO order)
         {
@@ -71,15 +78,14 @@ namespace StoreOrderManager.Controllers
             ViewBag.Products = products;
             return View(order);
         }
-        // GET: OrderController/Delete/5
+
         [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int id) 
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             return View(order);
         }
-
-        // POST: OrderController/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteOrderConfirmed(int id)
