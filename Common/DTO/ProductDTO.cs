@@ -22,6 +22,6 @@ namespace Common.DTO
 
         public virtual Category? Category { get; set; }
         public virtual Supplier? Supplier { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual List<OrderDetail> OrderDetails { get; set; } = null!;
     }
 }

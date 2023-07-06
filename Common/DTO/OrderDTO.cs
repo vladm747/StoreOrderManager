@@ -25,7 +25,7 @@ namespace Common.DTO
         public string? ShipCountry { get; set; }
         public Customer? Customer { get; set; }
         public Employee? Employee { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public Shipper? ShipViaNavigation { get; set; }
     }
 }

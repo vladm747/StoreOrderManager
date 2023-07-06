@@ -45,9 +45,8 @@ namespace StoreOrderManager.Controllers
         }
 
         //POST: OrderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, OrderDTO order)
+        [HttpPost("edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute]int id, OrderDTO order)
         {
             try
             {

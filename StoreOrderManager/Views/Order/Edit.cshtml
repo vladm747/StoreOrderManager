@@ -1,20 +1,23 @@
-﻿@model Common.DTO.OrderDTO
+﻿@using Common.DTO
+@model Common.DTO.OrderDTO
 
 @{
     ViewData["Title"] = "Edit";
+    var orderDetails = Model.OrderDetails.ToList();
+    List<ProductDTO> products = ViewBag.Products ?? new List<ProductDTO>();
 }
 
 <h1>Edit</h1>
 
 <h4>OrderDTO</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<hr/>
+<form asp-controller="Order" asp-action="Edit" asp-route-id="@Model.Id" method="POST">
+    <div class="row">
+        <div class="col-md-6">
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
+                <input asp-for="Id" class="form-control" disabled/>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -82,17 +85,44 @@
                 <input asp-for="ShipCountry" class="form-control" />
                 <span asp-validation-for="ShipCountry" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div class="col-md-6">
+            @for(int i = 0; i < Model.OrderDetails.Count; i++)
+            {
+                <h5>OrderDetail</h5>
+                <div class="form-group">
+                    <label class="control-label">UnitPrice</label>
+                    <input asp-for="OrderDetails[i].UnitPrice" class="form-control"
+                           value="@orderDetails[i].UnitPrice"/>
+                    <span asp-validation-for="OrderDetails[i].UnitPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Discount</label>
+                    <input asp-for="OrderDetails[i].Discount"  class="form-control" value="@orderDetails[i].Discount">
+                    <span asp-validation-for="OrderDetails[i].Discount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">ProductId</label>
+                    <input asp-for="OrderDetails[i].ProductId"
+                           type="number" class="form-control" value="@orderDetails[i].ProductId">
+                    <span asp-validation-for="OrderDetails[i].ProductId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Quantity</label>
+                    <input asp-for="OrderDetails[i].Quantity"
+                           type="number" class="form-control" value="@orderDetails[i].Quantity">
+                    <span asp-validation-for="OrderDetails[i].Quantity" class="text-danger"></span>
+                </div>
+            }
+                
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Order" asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

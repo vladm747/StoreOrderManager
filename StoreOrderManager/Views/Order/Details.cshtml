@@ -97,49 +97,94 @@
             @Html.DisplayFor(model => model.ShipCountry)
         </dd>
     </dl>
-    <h4>Products</h4>
+    <h4>OrderDetails</h4>
     @{
-        var product = new ProductDTO();
+        var orderDetail = new OrderDetailDTO();
     }
-    <table class="table table-striped">
+<div class="container">
+    <table class="table table-hover">
         <thead>
-        <tr class ="row">
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(_ => product.Id)
+        <tr>
+            <th>
+                @Html.DisplayNameFor(_ => orderDetail.UnitPrice)
             </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(_ => product.ProductName)
+            <th>
+                @Html.DisplayNameFor(_ => orderDetail.Quantity)
             </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(_ => product.SupplierId)
+            <th>
+                @Html.DisplayNameFor(_ => orderDetail.ProductId)
             </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(_ => product.CategoryId)
+            <th>
+                @Html.DisplayNameFor(_ => orderDetail.Discount)
             </th>
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in products)
-            {
-                <tr class="row">
-                    <td class = "col-sm-10">
-                        @Html.DisplayFor(_ => item.Id)
-                    </td>
-                    <td class="col-sm-10">
-                        @Html.DisplayFor(_ => item.ProductName)
-                    </td>
-                    <td class="col-sm-10">
-                        @Html.DisplayFor(_ => item.SupplierId)
-                    </td>
-                    <td class="col-sm-10">
-                        @Html.DisplayFor(_ => item.CategoryId)
-                    </td>
-                </tr>
-            }
+                @foreach (var item in orderDetails)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(_ => item.UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayFor(_ => item.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayFor(_ => item.ProductId)
+                </th>
+                <th>
+                    @Html.DisplayFor(_ => item.Discount)
+                </th>
+            </tr>
+        }
         </tbody>
     </table>
+    <h4>Products</h4>
+    @{
+        var product = new ProductDTO();
+    }
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(_ => product.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => product.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => product.SupplierId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => product.CategoryId)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in products)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayFor(_ => item.Id)
+                    </th>
+                        <th>
+                        @Html.DisplayFor(_ => item.ProductName)
+                    </th>
+                        <th>
+                        @Html.DisplayFor(_ => item.SupplierId)
+                    </th>
+                        <th>
+                        @Html.DisplayFor(_ => item.CategoryId)
+                    </th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+   
 </div>
 <div>
-   @* @Html.ActionLink("Edit", "Edit", new {  id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>*@
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>
 </div>
