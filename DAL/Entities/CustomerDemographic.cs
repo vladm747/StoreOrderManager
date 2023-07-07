@@ -8,5 +8,5 @@ public class CustomerDemographic : BaseEntity<string>
 {
     public string? CustomerDesc { get; set; }
 
-    public virtual ICollection<Customer> Customers { get; set; } = null!;
+    public ICollection<Customer> Customers { get; set; } = null!;
 }

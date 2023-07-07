@@ -16,7 +16,7 @@ public class Product: BaseEntity<int>
     public short? ReorderLevel { get; set; }
     public bool Discontinued { get; set; }
 
-    public virtual Category? Category { get; set; }
-    public virtual Supplier? Supplier { get; set; }
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+    public Category? Category { get; set; }
+    public Supplier? Supplier { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; set; } = null!;
 }

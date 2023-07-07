@@ -20,8 +20,8 @@ public class Order : BaseEntity<int>
     public string? ShipPostalCode { get; set; }
     public string? ShipCountry { get; set; }
 
-    public virtual Customer? Customer { get; set; }
-    public virtual Employee? Employee { get; set; }
-    public virtual Shipper? ShipperNavigation { get; set; }
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+    public Customer? Customer { get; set; }
+    public Employee? Employee { get; set; }
+    public Shipper? ShipperNavigation { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; set; } = null!;
 }

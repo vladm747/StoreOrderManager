@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Common.DTO.OrderDTO>
+
+@{
+    ViewData["Title"] = "Orders";
+    Pager pager = ViewBag.Pager ?? new Pager();
+
+    string? query = ViewBag.SearchQuery;
+}
+<div class="col-4 justify-content-end">
+    <form asp-controller="Order" asp-action="OrdersList" asp-route-page="1">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="searchQuery"
+                   placeholder="Search Key">
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit"
+                   value="Search">
+        </span>
+    </form>
+</div>
+<h1>Orders</h1>
+<div class="container">
+    <div class="m-0">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CustomerId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmployeeId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RequiredDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShippedDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipVia)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Freight)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipCity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipRegion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipPostalCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipCountry)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RequiredDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShippedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipVia)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Freight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipRegion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipPostalCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipCountry)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                
+                                <button type="button" class="btn btn-primary">                                
+                                    <a asp-action="Edit" asp-route-id="@item.Id" style="color: white;" class="btn btn-sm">Edit</a>
+                                </button>
+                                <button type="button" class="btn btn-info">
+                                    <a asp-action="Details" asp-route-id="@item.Id" style="color: white;" class="btn btn-sm">Details</a>
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <a asp-action="Delete" asp-route-id="@item.Id" style="color: white;" class="btn btn-sm">Delete</a>
+                                </button>
+                               
+                            </div>
+
+                          
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        @if (pager.PagesCount > 0)
+        {
+            <ul class="pagination justify-content-start">
+                @if (pager.PageIndex > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="1" asp-route-searchQuery="@query">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex - 1)" asp-route-searchQuery="@query">Previous</a>
+                    </li>
+                }
+                @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
+                {
+                    <li class="page-item @(pg == pager.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@pg" asp-route-searchQuery="@query">@pg</a>
+                    </li>
+                }
+                @if (pager.PageIndex < pager.PagesCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PageIndex + 1)" asp-route-searchQuery="@query">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Order" asp-action="OrdersList" asp-route-page="@(pager.PagesCount)" asp-route-searchQuery="@query">Last</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

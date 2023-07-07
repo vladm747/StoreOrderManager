@@ -24,8 +24,8 @@ public class Employee : BaseEntity<int>
     public int? ReportsTo { get; set; }
     public string? PhotoPath { get; set; }
 
-    public virtual Employee? ReportsToNavigation { get; set; }
-    public virtual ICollection<Employee> InverseReportsToNavigation { get; set; } = null!;
-    public virtual ICollection<Order> Orders { get; set; } = null!;
-    public virtual ICollection<Territory> Territories { get; set; } = null!;
+    public Employee? ReportsToNavigation { get; set; }
+    public ICollection<Employee> InverseReportsToNavigation { get; set; } = null!;
+    public ICollection<Order> Orders { get; set; } = null!;
+    public ICollection<Territory> Territories { get; set; } = null!;
 }

@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+h1{
+    text-align: center;
+}
+.container{
+    margin-left: 100px;
+}

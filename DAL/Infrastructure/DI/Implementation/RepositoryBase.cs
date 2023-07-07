@@ -6,19 +6,22 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Context;
+using DAL.Entities.Base;
 using DAL.Infrastructure.DI.Abstract;
 
 namespace DAL.Infrastructure.DI.Implementation
 {
-    public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : class
+    public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        private readonly NorthwindContext _context;
+        public NorthwindContext Context { get; }
         public DbSet<TEntity> Table { get; }
         protected RepositoryBase(NorthwindContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            Table = _context.Set<TEntity>();
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+            Table = Context.Set<TEntity>();
         }
+        protected RepositoryBase(DbContextOptions<NorthwindContext> options) : this(new NorthwindContext(options)) { }
+      
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await Table.ToListAsync();
@@ -50,7 +53,7 @@ namespace DAL.Infrastructure.DI.Implementation
         {
             try
             {
-                return await _context.SaveChangesAsync();
+                return await Context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

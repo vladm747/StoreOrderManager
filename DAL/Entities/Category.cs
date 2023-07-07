@@ -10,5 +10,5 @@ public class Category : BaseEntity<int>
     public string? Description { get; set; }
     public byte[]? Picture { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }
