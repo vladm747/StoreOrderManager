@@ -8,5 +8,5 @@ public class Region : BaseEntity<int>
 {
     public string RegionDescription { get; set; } = string.Empty;
 
-    public virtual ICollection<Territory> Territories { get; set; } = null!;
+    public ICollection<Territory> Territories { get; set; } = null!;
 }

@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.DTO;
 using DAL.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Object = System.Object;
 
-namespace BLL.AutoMapperProfiles
+namespace BLL.AutoMapperProfiles;
+
+public class OrderProfile : Profile
 {
-    public class OrderProfile : Profile
+    public OrderProfile()
     {
-        public OrderProfile()
-        {
-            CreateMap<Order, OrderDTO>().ReverseMap();
-            CreateMap<Product, ProductDTO>().ReverseMap();
-        }
+        var mapper = new Mapper(new MapperConfiguration(config => config.AddProfiles(new Profile[]
+            {new OrderDetailProfile(), new CustomerProfile(), new EmployeeProfile(), new ShipperProfile()})));
+
+        CreateMap<Order, OrderDTO>()
+            .ForMember(dest => dest.OrderDetails,
+                opt => opt.MapFrom(src => mapper.Map<ICollection<OrderDetailDTO>>(src.OrderDetails)))
+            .ForMember(dest => dest.ShipViaNavigation,
+                opt => opt.MapFrom(src => mapper.Map<ShipperDTO>(src.ShipperNavigation)))
+            .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => mapper.Map<CustomerDTO>(src.Customer)))
+            .ForMember(dest => dest.Employee, opt => opt.MapFrom(src => mapper.Map<EmployeeDTO>(src.Employee)));
+
+        CreateMap<OrderDTO, Order>()
+            .ForMember(dest => dest.OrderDetails,
+                opt => opt.MapFrom(src => mapper.Map<List<OrderDetail>>(src.OrderDetails)));
     }
 }

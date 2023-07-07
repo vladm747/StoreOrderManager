@@ -24,15 +24,15 @@ namespace BLL.Services.DI.Implementation
         public async Task<IEnumerable<ProductDTO>> GetAllAsync()
         {
             var orders = await _productRepository.GetAllAsync();
+
             return _mapper.Map<IEnumerable<ProductDTO>>(orders);
         }
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)
         {
-            var order = await _productRepository.FindAsync(id);
-    /*        if (order == null)
-                throw new ArgumentException($"There is no product with id {id} in the database");*/
-            return _mapper.Map<ProductDTO>(order);
+            var product = await _productRepository.FindAsync(id);
+
+            return _mapper.Map<ProductDTO>(product);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Common.DTO
         public string? ShipRegion { get; set; }
         public string? ShipPostalCode { get; set; }
         public string? ShipCountry { get; set; }
-        public Customer? Customer { get; set; }
-        public Employee? Employee { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-        public Shipper? ShipViaNavigation { get; set; }
+        public CustomerDTO? Customer { get; set; }
+        public EmployeeDTO? Employee { get; set; }
+        public List<OrderDetailDTO> OrderDetails { get; set; } = new List<OrderDetailDTO>();
+        public ShipperDTO? ShipViaNavigation { get; set; }
     }
 }

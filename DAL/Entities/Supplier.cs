@@ -18,5 +18,5 @@ public class Supplier : BaseEntity<int>
     public string? Fax { get; set; }
     public string? HomePage { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = null!;
+    public ICollection<Product> Products { get; set; } = null!;
 }

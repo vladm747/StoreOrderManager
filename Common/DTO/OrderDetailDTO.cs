@@ -1,6 +1,7 @@
 ﻿using DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,7 @@ namespace Common.DTO
         public int ProductId { get; set; }
         public decimal UnitPrice { get; set; }
         public short Quantity { get; set; }
+        [Range(0, 1)]
         public float Discount { get; set; }
-
-        public Order Order { get; set; } = null!;
-        public Product Product { get; set; } = null!;
     }
 }

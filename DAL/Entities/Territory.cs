@@ -9,6 +9,6 @@ public class Territory : BaseEntity<string>
     public string TerritoryDescription { get; set; } = string.Empty;
     public int RegionId { get; set; }
 
-    public virtual Region Region { get; set; } = null!;
-    public virtual ICollection<Employee> Employees { get; set; } = null!;
+    public Region Region { get; set; } = null!;
+    public ICollection<Employee> Employees { get; set; } = null!;
 }

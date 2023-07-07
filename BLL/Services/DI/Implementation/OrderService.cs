@@ -36,6 +36,7 @@ namespace BLL.Services.DI.Implementation
         {
             if(page < 1) page = 1;
             var orders = await _orderRepository.GetPageAsync((page-1)*pageSize, pageSize);
+
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
         public async Task<IEnumerable<OrderDTO>> SearchOrdersByQueryAsync(string searchQuery)
@@ -52,21 +53,24 @@ namespace BLL.Services.DI.Implementation
             var order = await _orderRepository.FindAsync(id);
 
             if (order == null)
-                throw new ArgumentException($"There is no order with id {id} in the database");
+                throw new KeyNotFoundException($"Order with id {id} doesn't exist in database!");
 
             return _mapper.Map<OrderDTO>(order);
         }
 
-        public async Task UpdateAsync(int id, OrderDTO order)
+        public async Task UpdateAsync(int id, OrderDTO orderDto)
         {
-            Order? item = await _orderRepository.FindAsync(id);
+            if (id != orderDto.Id)
+                throw new InvalidOperationException(nameof(id));
 
-            if (item == null)
+            Order? order = await _orderRepository.FindAsync(id);
+
+            if (order == null)
                 throw new KeyNotFoundException($"Order with id {id} doesn't exist in database!");
 
-            _mapper.Map(order, item);
+            _mapper.Map(orderDto, order);
 
-            await _orderRepository.UpdateAsync(item);
+            await _orderRepository.UpdateAsync(order);
         }
 
         public async Task DeleteAsync(int id)

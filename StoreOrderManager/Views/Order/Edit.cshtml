@@ -91,24 +91,24 @@
             {
                 <h5>OrderDetail</h5>
                 <div class="form-group">
-                    <label class="control-label">UnitPrice</label>
+                    <label class="form-label">UnitPrice</label>
                     <input asp-for="OrderDetails[i].UnitPrice" class="form-control"
                            value="@orderDetails[i].UnitPrice"/>
                     <span asp-validation-for="OrderDetails[i].UnitPrice" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Discount</label>
-                    <input asp-for="OrderDetails[i].Discount"  class="form-control" value="@orderDetails[i].Discount">
+                    <label class="form-label">Discount</label>
+                    <input asp-for="OrderDetails[i].Discount" class="form-control" value="@orderDetails[i].Discount">
                     <span asp-validation-for="OrderDetails[i].Discount" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">ProductId</label>
+                    <label class="form-label">ProductId</label>
                     <input asp-for="OrderDetails[i].ProductId"
                            type="number" class="form-control" value="@orderDetails[i].ProductId">
                     <span asp-validation-for="OrderDetails[i].ProductId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Quantity</label>
+                    <label class="form-label">Quantity</label>
                     <input asp-for="OrderDetails[i].Quantity"
                            type="number" class="form-control" value="@orderDetails[i].Quantity">
                     <span asp-validation-for="OrderDetails[i].Quantity" class="text-danger"></span>
@@ -117,7 +117,7 @@
                 
         </div>
     </div>
-    <div class="form-group">
+    <div class="row justify-content-center">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
